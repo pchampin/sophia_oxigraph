@@ -1,0 +1,22 @@
+[package]
+name = "sophia_oxigraph"
+version = "0.1.0"
+authors = ["Pierre-Antoine Champin <pchampin@liris.cnrs.fr>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lazy_static = "1.4.0"
+sophia_term = { version="0.4", git="https://github.com/pchampin/sophia_rs", branch="master" }
+#sophia_term = { version="0.4", path="../sophia_rs/term/"}
+sophia = { version="0.4", git="https://github.com/pchampin/sophia_rs", branch="master" }
+#sophia = { version="0.4", path="../sophia_rs/sophia/", features=["test_macro"] }
+once_cell = "1.3.1"
+oxigraph = { version="0.1.0", git="https://github.com/Tpt/oxigraph", branch="master" }
+#oxigraph = { version="0.1.0", path="../oxigraph/lib" }
+thiserror = "1.0.14"
+
+[dev-dependencies]
+lazy_static = "1.4.0"
+sophia = { version="0.4", git="https://github.com/pchampin/sophia_rs", branch="master", features=["test_macro"] }
