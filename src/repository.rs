@@ -339,12 +339,18 @@ where
 mod test {
     use super::*;
     use oxigraph::MemoryRepository;
+    use sophia::quad::stream::QuadSource;
+    use sophia::test_dataset_impl;
+    use sophia::triple::stream::{SinkError, StreamResult};
 
     type SopMemRepo = Pin<Box<SophiaRepository<MemoryRepository>>>;
 
-    fn make_repo() -> SopMemRepo {
-        SophiaRepository::new(MemoryRepository::default()).unwrap()
+    fn make_repo<QS: QuadSource>(qs: QS) -> StreamResult<SopMemRepo, QS::Error, MutationError> {
+        let mut d = SophiaRepository::new(MemoryRepository::default())
+            .map_err(|err| SinkError(MutationError::from(err)))?;
+        d.insert_all(qs)?;
+        Ok(d)
     }
 
-    sophia::test_dataset_impl!(auto, SopMemRepo, false, make_repo, false);
+    sophia::test_dataset_impl!(auto, SopMemRepo, false, false, make_repo);
 }
